@@ -27,10 +27,7 @@ function NavItem({ item, level = 0, currentPath }) {
   if (item.children && !item.path) {
     return (
       <>
-        <ListItemButton
-          onClick={handleClick}
-          sx={{ pl: 2 + level * 2 }}
-        >
+        <ListItemButton onClick={handleClick} sx={{ pl: 2 + level * 2 }}>
           <ListItemText primary={item.label} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
@@ -79,27 +76,18 @@ function NavItem({ item, level = 0, currentPath }) {
   );
 }
 
-export default function Sidebar({ drawerWidth, navigationTree }) {
+export default function Sidebar({
+  drawerWidth,
+  navigationTree,
+  mobileOpen,
+  onDrawerToggle,
+}) {
   const location = useLocation();
 
-  return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-    >
+  const drawerContent = (
+    <>
       <Toolbar />
-      <Box
-        sx={{
-          overflow: "auto",
-        }}
-      >
+      <Box sx={{ overflow: "auto" }}>
         <List
           component="nav"
           subheader={
@@ -115,6 +103,51 @@ export default function Sidebar({ drawerWidth, navigationTree }) {
           ))}
         </List>
       </Box>
-    </Drawer>
+    </>
+  );
+
+  return (
+    <Box
+      component="nav"
+      sx={{
+        width: { sm: drawerWidth },
+        flexShrink: { sm: 0 },
+      }}
+      aria-label="Páginas da Wiki"
+    >
+      {/* Drawer para mobile*/}
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={onDrawerToggle}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        sx={{
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: drawerWidth,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      {/* Drawer para desktop */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+          },
+        }}
+        open
+      >
+        {drawerContent}
+      </Drawer>
+    </Box>
   );
 }

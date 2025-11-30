@@ -1,8 +1,9 @@
 import React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import MenuIcon from "@mui/icons-material/Menu";
 
-export default function TopBar({ drawerWidth }) {
+export default function TopBar({ drawerWidth, onMenuClick }) {
   return (
     <AppBar
       position="fixed"
@@ -12,9 +13,19 @@ export default function TopBar({ drawerWidth }) {
       }}
     >
       <Toolbar>
-        <MenuBookIcon sx={{ mr: 2 }} />
+        {/* Desaparecer no desk pois é só para mobile */}
+        <IconButton
+          color="inherit"
+          edge="start"
+          onClick={onMenuClick}
+          sx={{ mr: 2, display: { sm: "none" } }}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <MenuBookIcon sx={{ mr: 2, display: { xs: "none", sm: "inline-flex" } }} />
         <Typography variant="h6" noWrap component="div">
-          Wiki sobre o projeto EFC04
+          Minha Wiki
         </Typography>
       </Toolbar>
     </AppBar>
