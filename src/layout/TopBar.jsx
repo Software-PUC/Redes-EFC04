@@ -1,4 +1,3 @@
-import React from "react";
 import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -25,7 +24,7 @@ export default function TopBar({ drawerWidth, onMenuClick }) {
 
         <MenuBookIcon sx={{ mr: 2, display: { xs: "none", sm: "inline-flex" } }} />
         <Typography variant="h6" noWrap component="div">
-          Minha Wiki
+          Wiki EFC04
         </Typography>
       </Toolbar>
     </AppBar>
