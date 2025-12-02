@@ -1,12 +1,21 @@
 import Title from "../../components/common/Title";
 import TopicTitle from "../../components/common/TopicTitle";
 import Paragraph from "../../components/common/Paragraph";
+import Image from "../../components/common/Image";
+import img from "/src/assets/images/Seg.jpeg";
 
 export default function PhaseOne() {
   return (
     <>
       <Title>Fase 1: A Fundação da LAN</Title>
-      <Paragraph>Parágrago introdutório.</Paragraph>
+      <Paragraph>
+        Um dos maiores desafios em redes locais corporativas é o gerenciamento
+        de domínios de broadcast e a segurança da informação interna. Em um
+        ambiente compartilhado, a falta de limites lógicos permite que falhas ou
+        acessos indevidos se propaguem por toda a rede. A resposta técnica para
+        mitigar esses problemas sem aumentar o custo com hardware físico é a
+        segmentação lógica.
+      </Paragraph>
 
       <TopicTitle>Do Caos à Ordem (Acesso Múltiplo e Comutação)</TopicTitle>
       <Paragraph>
@@ -32,24 +41,29 @@ export default function PhaseOne() {
 
       <TopicTitle>Segmentação Inteligente (VLANs e Trunking)</TopicTitle>
       <Paragraph>
-        Para resolver os desafios de segurança e organização da nova sede, a
-        solução ideal é a implementação de VLANs baseadas em porta. Essa técnica
-        permite isolar logicamente os departamentos, mesmo que compartilhem o
-        mesmo switch físico. Atribuindo, por exemplo, a VLANs diferentes para
-        vários computadores, é garantido que um computador específico não tenha
-        acesso direto à camada 2 de uma rede que ele não pertence, aumentando a
-        segurança dos dados.
+        Para solucionar a desorganização e os riscos de segurança da rede
+        antiga, implementamos a arquitetura de VLANs baseadas em porta. Essa
+        estratégia segmenta logicamente o switch físico em redes virtuais
+        distintas: VLAN 10 (Engenharia), VLAN 20 (Vendas) e VLAN 30
+        (Financeiro).
       </Paragraph>
       <Paragraph>
-        Para que essa comunicação funcione entre diferentes switches, portas
-        Trunk são utilizadas em conjunto com o protocolo 802.1Q. Quando um
-        quadro Ethernet precisa transitar entre switches, esse protocolo insere
-        uma Tag de 4 bytes no cabeçalho original, posicionada entre o endereço
-        MAC de origem e o campo EtherType. O dado mais crítico dentro dessa
-        etiqueta é o VID, que identifica a qual departamento o pacote pertence,
-        permitindo que o switch receptor entregue a mensagem estritamente para
-        as portas daquela VLAN específica.
+        Isso reduz o domínio de broadcast e garante que dados sensíveis do
+        Financeiro, por exemplo, não sejam acessíveis na camada de enlace por
+        portas conectadas à Vendas. Para estender essa segmentação entre os
+        andares (comunicação entre switches), utilizamos conexões Trunk operando
+        com o protocolo IEEE 802.1Q. Diferente das portas de acesso comuns, o
+        Trunk insere uma Tag (etiqueta) de 4 bytes no cabeçalho Ethernet. O
+        campo vital dessa etiqueta é o VID (VLAN ID) de 12 bits. É ele que
+        permite ao switch receptor identificar que um quadro vindo da Engenharia
+        deve ser entregue exclusivamente às portas configuradas na VLAN 10,
+        mantendo o isolamento total do tráfego ponta a ponta.
       </Paragraph>
+      <Image
+        src={img}
+        alt="Segmento inteligente"
+        legend="O diagrama ilustra que os computadores transmitem quadros Ethernet padrão. O Switch de origem insere a etiqueta 802.1Q contendo o ID da VLAN (10 ou 30) apenas para o transporte através do Link Trunk. Ao chegar no Switch de destino, essa etiqueta é removida, garantindo que o computador final receba os dados no formato original."
+      />
 
       <TopicTitle>A Cola da Rede (Endereçamento MAC e ARP)</TopicTitle>
       <Paragraph>

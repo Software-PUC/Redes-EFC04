@@ -271,6 +271,7 @@ export default function PhaseTwo() {
         src={imgSDN}
         alt="Arquitetura SDN"
         legend="Figura: Estrutura SDN separando Plano de Dados e Plano de Controle"
+        width={300}
       />
     </>
   );
