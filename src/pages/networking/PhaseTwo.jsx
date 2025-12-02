@@ -6,6 +6,9 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Image from "../../components/common/Image";
 import imgSDN from "../../assets/images/SDNImage.png";
+import SubTopic from "../../components/common/SubTopic";
+import List from "../../components/common/List";
+import ItemList from "../../components/common/ItemList";
 
 export default function PhaseTwo() {
   return (
@@ -84,44 +87,42 @@ export default function PhaseTwo() {
         </Alert>
       </Paragraph>
 
+      <SubTopic>Como o OSPF usa Link State + Algoritmo de Dijkstra</SubTopic>
       <Paragraph>
-        <h4>Como o OSPF usa Link State + Algoritmo de Dijkstra</h4>
-        <p>
-          O OSPF segue quatro etapas principais que garantem que todos os
-          roteadores tenham uma visão idêntica da rede:
-        </p>
-        <ul>
-          <li>Descoberta de vizinhos → mensagens Hello</li>
-          <span>
-            Cada roteador envia pacotes Hello nas interfaces OSPF para
-            identificar vizinhos e formar adjacências.
-          </span>
-          <br />
-          <br />
-          <li>Troca de LSAs (Link-State Advertisements)</li>
-          <span>
-            Cada roteador divulga: suas interfaces, custos dos enlaces, vizinhos
-            conectados. Esses LSAs são enviados em um Link State Broadcast,
-            alcançando todos os roteadores da mesma área.
-          </span>
-          <br />
-          <br />
-          <li>Construção do LSDB (Link State Database)</li>
-          <span>
-            Todos os roteadores recebem os mesmos LSAs. Resultado: todos possuem
-            exatamente o mesmo mapa da topologia.
-          </span>
-          <br />
-          <br />
-          <li>Cálculo de rotas com Dijkstra (SPF – Shortest Path First)</li>
-          <span>
-            Usando o LSDB como entrada, cada roteador executa Dijkstra para
-            montar sua árvore SPF: encontra todos os caminhos de menor custo,
-            monta a tabela de roteamento final. Como todos têm o mesmo LSDB,
-            todos calculam rotas consistentes e estáveis, evitando loops.
-          </span>
-        </ul>
+        O OSPF segue quatro etapas principais que garantem que todos os
+        roteadores tenham uma visão idêntica da rede:
       </Paragraph>
+      <List>
+        <ItemList
+          extra={
+            "Cada roteador envia pacotes Hello nas interfaces OSPF para identificar vizinhos e formar adjacências."
+          }
+        >
+          Descoberta de vizinhos → mensagens Hello
+        </ItemList>
+        <ItemList
+          extra={
+            "Cada roteador divulga: suas interfaces, custos dos enlaces, vizinhos conectados. Esses LSAs são enviados em um Link State Broadcast, alcançando todos os roteadores da mesma área."
+          }
+        >
+          Troca de LSAs (Link-State Advertisements)
+        </ItemList>
+        <ItemList
+          extra={
+            "Todos os roteadores recebem os mesmos LSAs. Resultado: todos possuem exatamente o mesmo mapa da topologia."
+          }
+        >
+          Construção do LSDB (Link State Database)
+        </ItemList>
+        <ItemList
+          jump={false}
+          extra={
+            "Usando o LSDB como entrada, cada roteador executa Dijkstra para montar sua árvore SPF: encontra todos os caminhos de menor custo, monta a tabela de roteamento final. Como todos têm o mesmo LSDB, todos calculam rotas consistentes e estáveis, evitando loops."
+          }
+        >
+          Cálculo de rotas com Dijkstra (SPF – Shortest Path First)
+        </ItemList>
+      </List>
 
       <TopicTitle>A Internet Global (Roteamento Inter-AS)</TopicTitle>
       <Paragraph>
@@ -131,53 +132,53 @@ export default function PhaseTwo() {
         Abaixo veremos a comparação entre eBGP x iBGP, funções completamente
         diferentes.
       </Paragraph>
+
+      <SubTopic>eBGP – Comunicação com provedores externos</SubTopic>
       <Paragraph>
-        <h4>eBGP – Comunicação com provedores externos</h4>
-        <p>Utilizado entre AS diferentes (TechNova ↔ ISP). As funções são:</p>
-        <ul>
-          <li>
-            Anunciar os prefixos públicos da empresa (ex.: 200.100.10.0/24).
-          </li>
-          <li>Receber rotas globais da Internet.</li>
-          <li>
-            Aplicar políticas como: “Prefira o ISP A como rota principal”, “Não
-            aceite prefixos muito específicos”, “Desvie tráfego crítico para o
-            ISP B”.
-          </li>
-        </ul>
-        <Alert severity="info">
-          <AlertTitle>Características</AlertTitle>
-          TTL = 1 (sessão direta). AS Path cresce a cada AS atravessado. Foco em
-          políticas, não em desempenho técnico.
-        </Alert>
+        Utilizado entre AS diferentes (TechNova ↔ ISP). As funções são:
+      </Paragraph>
+      <List>
+        <ItemList>
+          Anunciar os prefixos públicos da empresa (ex.: 200.100.10.0/24).
+        </ItemList>
+        <ItemList>Receber rotas globais da Internet.</ItemList>
+        <ItemList>
+          Aplicar políticas como: “Prefira o ISP A como rota principal”, “Não
+          aceite prefixos muito específicos”, “Desvie tráfego crítico para o ISP
+          B”.
+        </ItemList>
+      </List>
+      <Alert severity="info">
+        <AlertTitle>Características</AlertTitle>
+        TTL = 1 (sessão direta). AS Path cresce a cada AS atravessado. Foco em
+        políticas, não em desempenho técnico.
+      </Alert>
 
-        <h4>iBGP – Distribuição interna das rotas externas</h4>
-        <p>
-          Usado entre roteadores dentro do mesmo AS da TechNova. As funções são:
-        </p>
-        <ul>
-          <li>
-            Distribuir as rotas aprendidas pelos ISPs para o restante da rede.
-          </li>
-          <li>Manter consistência interna.</li>
-          <li>
-            Permitir que qualquer roteador saiba como sair para a Internet.
-          </li>
-        </ul>
-        <Alert severity="info">
-          <AlertTitle>Características</AlertTitle>
-          Não modifica o AS Path. Exige mecanismos como full mesh ou route
-          reflectors.
-        </Alert>
+      <SubTopic>iBGP – Distribuição interna das rotas externas</SubTopic>
+      <Paragraph>
+        Usado entre roteadores dentro do mesmo AS da TechNova. As funções são:
+      </Paragraph>
+      <List>
+        <ItemList>
+          Distribuir as rotas aprendidas pelos ISPs para o restante da rede.
+        </ItemList>
+        <ItemList>Manter consistência interna.</ItemList>
+        <ItemList>
+          Permitir que qualquer roteador saiba como sair para a Internet.
+        </ItemList>
+      </List>
+      <Alert severity="info">
+        <AlertTitle>Características</AlertTitle>
+        Não modifica o AS Path. Exige mecanismos como full mesh ou route
+        reflectors.
+      </Alert>
 
-        <h4>Por que BGP usa políticas, não métricas técnicas?</h4>
-        <p>
-          Na Internet global, decisões de roteamento envolvem: contratos
-          comerciais, custo de trânsito, segurança, acordos de peering,
-          redundância. Por isso, o BGP não escolhe o “melhor caminho técnico”,
-          mas sim o caminho que atende às políticas administrativas definidas
-          pelo AS.
-        </p>
+      <SubTopic>Por que BGP usa políticas, não métricas técnicas?</SubTopic>
+      <Paragraph>
+        Na Internet global, decisões de roteamento envolvem: contratos
+        comerciais, custo de trânsito, segurança, acordos de peering,
+        redundância. Por isso, o BGP não escolhe o “melhor caminho técnico”, mas
+        sim o caminho que atende às políticas administrativas definidas pelo AS.
       </Paragraph>
 
       <TopicTitle>
@@ -188,21 +189,19 @@ export default function PhaseTwo() {
         roteadores manualmente. Isso leva à adoção do modelo SDN, que separa o
         plano de controle do plano de dados.
       </Paragraph>
+
+      <SubTopic>Rede Tradicional (Per-Router Control Plane)</SubTopic>
       <Paragraph>
-        <h4>Rede Tradicional (Per-Router Control Plane)</h4>
-        <p>
-          Em redes clássicas: cada roteador executa seu próprio OSPF/BGP, cada
-          um calcula rotas individualmente, mudanças exigem configuração manual
-          em vários equipamentos, políticas complexas são difíceis de manter. O
-          problema disto é uma gestão difícil e fragmentada.
-        </p>
+        Em redes clássicas: cada roteador executa seu próprio OSPF/BGP, cada um
+        calcula rotas individualmente, mudanças exigem configuração manual em
+        vários equipamentos, políticas complexas são difíceis de manter. O
+        problema disto é uma gestão difícil e fragmentada.
       </Paragraph>
+
+      <SubTopic>Rede SDN (Control Plane Centralizado Logicamente)</SubTopic>
       <Paragraph>
-        <h4>Rede SDN (Control Plane Centralizado Logicamente)</h4>
-        <p>
-          No SDN, os dispositivos da rede são “simples switches” que só aplicam
-          regras recebidas. O controlador SDN passa a ser o “cérebro da rede”.
-        </p>
+        No SDN, os dispositivos da rede são “simples switches” que só aplicam
+        regras recebidas. O controlador SDN passa a ser o “cérebro da rede”.
       </Paragraph>
 
       <Table
@@ -231,42 +230,41 @@ export default function PhaseTwo() {
         ]}
       />
 
+      <SubTopic>Função do Controlador SDN</SubTopic>
       <Paragraph>
-        <h4>Função do Controlador SDN</h4>
-        <p>
-          O controlador é responsável por: ter visão global de toda a topologia;
-          calcular rotas de forma centralizada; aplicar políticas de segurança e
-          engenharia de tráfego; instalar, modificar ou remover regras nas flow
-          tables dos switches; automatizar reações (ex.: detectar
-          congestionamento e redirecionar fluxos).
-        </p>
+        O controlador é responsável por: ter visão global de toda a topologia;
+        calcular rotas de forma centralizada; aplicar políticas de segurança e
+        engenharia de tráfego; instalar, modificar ou remover regras nas flow
+        tables dos switches; automatizar reações (ex.: detectar congestionamento
+        e redirecionar fluxos).
       </Paragraph>
-
       <Paragraph>
         Em resumo, ele substitui o plano de controle distribuído dos roteadores
         tradicionais.
       </Paragraph>
 
+      <SubTopic>Como o controlador controla os switches? (OpenFlow)</SubTopic>
       <Paragraph>
-        <h4>Como o controlador controla os switches? (OpenFlow)</h4>
-        <p>O protocolo mais usado é o OpenFlow, que permite ao controlador:</p>
-        <ul>
-          <li>
-            Enviar regras para os switches: “Se vier da VLAN 10, envie ao
-            firewall X”, “Se vier do servidor Y, duplicar tráfego para o IDS”.
-          </li>
-          <li>Modificar ações: enviar, descartar, redirecionar, espelhar.</li>
-          <li>Definir match conditions: IP, porta, VLAN, MAC, protocolo.</li>
-        </ul>
+        O protocolo mais usado é o OpenFlow, que permite ao controlador:
       </Paragraph>
+      <List>
+        <ItemList>
+          Enviar regras para os switches: “Se vier da VLAN 10, envie ao firewall
+          X”, “Se vier do servidor Y, duplicar tráfego para o IDS”.
+        </ItemList>
+        <ItemList>
+          Modificar ações: enviar, descartar, redirecionar, espelhar.
+        </ItemList>
+        <ItemList>
+          Definir match conditions: IP, porta, VLAN, MAC, protocolo.
+        </ItemList>
+      </List>
       <Paragraph>
         Isso separa claramente plano de dados (switches que apenas encaminham) e
         o plano de controle (controlador que decide o que deve ser feito).
       </Paragraph>
 
-      <Paragraph>
-        <h4>Exemplo da estrutura de uma arquitetura SDN</h4>
-      </Paragraph>
+      <SubTopic>Exemplo da estrutura de uma arquitetura SDN</SubTopic>
       <Image
         src={imgSDN}
         alt="Arquitetura SDN"
