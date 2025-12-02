@@ -4,12 +4,29 @@ import Paragraph from "../../components/common/Paragraph";
 import Table from "../../components/common/TableComponent";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import Image from "../../components/common/Image";
+import imgSDN from "../../assets/images/SDNImage.png";
 
 export default function PhaseTwo() {
   return (
     <>
       <Title>Fase 2: O Cérebro da Rede</Title>
-      <Paragraph>Parágrago introdutório.</Paragraph>
+      <Paragraph>
+        Com a infraestrutura física e lógica da LAN já estabelecida na Fase 1, a
+        TechNova agora enfrenta um novo desafio: garantir que toda a comunicação
+        interna e externa seja conduzida de forma inteligente, eficiente e
+        segura. Essa etapa representa a migração de uma simples rede local para
+        uma arquitetura corporativa completa, capaz de lidar com múltiplos
+        roteadores, caminhos redundantes e conexões simultâneas com diferentes
+        provedores de Internet. Na Fase 2, o foco passa da Camada de Enlace para
+        o Plano de Controle, que é responsável por decidir como os pacotes serão
+        encaminhados ao longo da rede. Isso exige a escolha adequada de
+        protocolos de roteamento, tanto dentro da organização (intra-AS) quanto
+        fora dela (inter-AS). Além disso, com o crescimento rápido da empresa,
+        torna-se fundamental adotar soluções mais modernas que permitam
+        automatização, flexibilidade e controle centralizado, abrindo espaço
+        para tecnologias como SDN (Software Defined Networking).
+      </Paragraph>
 
       <TopicTitle>
         Encontrando o Melhor Caminho (Roteamento Intra-AS)
@@ -246,6 +263,15 @@ export default function PhaseTwo() {
         Isso separa claramente plano de dados (switches que apenas encaminham) e
         o plano de controle (controlador que decide o que deve ser feito).
       </Paragraph>
+
+      <Paragraph>
+        <h4>Exemplo da estrutura de uma arquitetura SDN</h4>
+      </Paragraph>
+      <Image
+        src={imgSDN}
+        alt="Arquitetura SDN"
+        legend="Figura: Estrutura SDN separando Plano de Dados e Plano de Controle"
+      />
     </>
   );
 }
